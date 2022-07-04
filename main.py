@@ -7,25 +7,27 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import chromedriver_binary
 
+from function.google_account import login
+
 load_dotenv()
 
 options = Options()
 options.add_argument('--headless')
 driver = webdriver.Chrome(options=options)
 
-driver.get('https://google.com/')
+login(os.environ['GOOGLE_USER_NAME'],
+      os.environ["GOOGLE_USER_PASSWORD"], driver)
 
-# googleアカウントのログイン画面へ遷移
-google_account_login_button = driver.find_element(By.CLASS_NAME, "gb_1")
-google_account_login_button.click()
-
-# googleアカウントにログイン
-mail_box = driver.find_element("name", "identifier")
-mail_box.send_keys(os.environ['GOOGLE_UESR_NAME'], Keys.ENTER)
+# google広告にログイン
+driver.get("https://ads.google.com/intl/ja_JP/home/")
 driver.implicitly_wait(10)
 
-password_box = driver.find_element("name", "Passwd")
-password_box.send_keys(os.environ["GOOGLE_USER_PASSWORD"], Keys.ENTER)
-driver.implicitly_wait(10)
+hamburger_btn = driver.find_element(
+    By.CLASS_NAME, "glue-header__drawer-toggle-btn")
+hamburger_btn.click()
 
+google_ads_login_btn = driver.find_element(By.LINK_TEXT, "ログイン")
+google_ads_login_btn.click()
+
+# 終了
 driver.quit()

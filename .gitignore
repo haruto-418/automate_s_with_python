@@ -6,3 +6,6 @@ memo.html
 
 # dependencies
 *.png
+
+# cache
+__pycache__/

@@ -1,0 +1,8 @@
+# free note
+memo.html
+
+# env
+.env*
+
+# dependencies
+*.png
